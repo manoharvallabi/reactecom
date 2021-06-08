@@ -9,6 +9,8 @@ function App() {
 
   const [state, setState] = useState(false);
 
+  const [mymsg,setMymsg]=useState("");
+
   const[uname,setUname]=useState("");
 
   function authentication(username, password) {
@@ -16,9 +18,12 @@ function App() {
     console.log(username, password);
 
 
-    if (username !== "" && password !== "") {
+    if (username === "abc" && password !== "") {
       setUname(username);
       setState(!state);
+    }
+    else{
+      setMymsg("please enter valid credentials");
     }
 
   }
@@ -29,7 +34,7 @@ function App() {
 
   return (
     <div className="App">
-      {!state && <Login auth={authentication} />}
+      {!state && <Login auth={authentication} message={mymsg}/>}
       {state && <HomePage data={uname} />}
     </div>
   );

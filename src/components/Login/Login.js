@@ -41,6 +41,8 @@ export default function Login(props)
         <Input type="password" name="password" onChange={updatePwd} />
       </FormGroup>
       < Button outline color="primary" >Submit</Button>
+      <br></br><br></br>
+      <h6 style={{ color: 'red' }}>{props.message}</h6>
       </Form>  
     </div>
     );
