@@ -2,40 +2,45 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import "./Login.css";
-import HomePage from '../HomePage/HomePage';
-export default function Login()
+export default function Login(props)
 {
 
-  const[data,setData]=useState({
-      username:'',
-      password:''
-  })
+  const[username,setUsername]=useState('');
+  const[password,setPassword]=useState('');
 
-  const{username,password}=data;
 
-  const handleChange =e =>{
-    setData({...data,[e.target.name]:e.target.value})
+  function updateName(e)
+  {
+    setUsername(e.target.value);
   }
-    
+
+  function updatePwd(e)
+  {
+    setPassword(e.target.value);
+  }
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(data);
+        // console.log(username);
+        // console.log(password);
+        props.auth(username,password);
       }
+
+     
 
     
     return (
         <div className="Login">
           <Form onSubmit={handleSubmit}>
       <FormGroup>
-        <Label>Email</Label>
-        <Input type="email" name="username" onChange={handleChange} value={username} />
+        <Label>User Name</Label>
+        <Input type="text" name="username" onChange={updateName} />
       </FormGroup>
       <FormGroup>
         <Label>Password</Label>
-        <Input type="password" name="password" onChange={handleChange} value={password}/>
+        <Input type="password" name="password" onChange={updatePwd} />
       </FormGroup>
-      <Button outline color="primary">Submit</Button>
+      < Button outline color="primary" >Submit</Button>
       </Form>  
     </div>
     );
