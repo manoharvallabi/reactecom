@@ -1,42 +1,57 @@
 import React, { useRef, useState } from 'react';
 import { Card, Form, Button,Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
-import {Link,useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signup } = useAuth();
+  const { currentUser , updatePassword,updateEmail} = useAuth();
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false);
   const history=useHistory();
 
-  async function handleSubmit(e) {
+  const promises=[]
+
+
+  function Cancelfun()
+  {
+    history.push("/")
+  }
+
+  function handleSubmit(e) {
 
     e.preventDefault();
-    console.log('in submit')
+    setLoading(true)
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError('passwords do not match')
     }
 
-    try {
-      setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+    if (passwordRef.current.value) {
+      promises.push(updatePassword(passwordRef.current.value))
     }
-    catch
+
+    if(emailRef.current.value!==currentUser.email)
     {
-      setError('failed to create an account')
+      promises.push(updateEmail(emailRef.current.value))
     }
-    setLoading(false);
+
+    Promise.all(promises).then(()=>{
+      history.push("/")
+    }).catch(()=>{
+      setError('failed to update')
+    }).finally(()=>{
+      setLoading(false)
+    })
+
   }
 
   return (
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+          <h2 className="text-center mb-4">Update Profile</h2>
           {error && <Alert variant="danger" style={{textAlign:'center'}}>{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
@@ -45,22 +60,22 @@ export default function Signup() {
             </Form.Group>
             <Form.Group id="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Control type="password" placeholder="leave blank to keep it same" ref={passwordRef}  />
             </Form.Group>
             <Form.Group id="password-confirm">
               <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
+              <Form.Control type="password" placeholder="leave blank to keep it same" ref={passwordConfirmRef}  />
             </Form.Group>
             <br></br>
             <Button className="w-100" type="submit" disabled={loading} >
-              Sign Up
+              Update 
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Already have an account? <Link to="/signin">Sign In</Link>
-      </div>
+      <div className="w-100 text-center mt-4">
+        <Button variant="link" onClick={Cancelfun} style={{ textDecoration: 'none' }}>Cancel</Button>
+        </div>
     </>
   );
 
