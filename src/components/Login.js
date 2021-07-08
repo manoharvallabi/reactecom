@@ -49,13 +49,13 @@ export default function Login() {
               Sign in
             </Button>
             <div className="w-100 text-center mt-2">
-        <Link to="/reset-password">Forgot Password? </Link>
+        <Link to="/reset-password" style={{ textDecoration: 'none' }}>Forgot Password? </Link>
       </div>
           </Form>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Create a account? <Link to="/signup">Sign Up</Link>
+        Create a account? <Link to="/signup" style={{ textDecoration: 'none' }}>Sign Up</Link>
       </div>
     </>
   );

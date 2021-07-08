@@ -47,13 +47,13 @@ export default function PasswordReset() {
               Update Password
             </Button>
             <div className="w-100 text-center mt-2">
-         <Link to="/signin">Log In</Link>
+         <Link to="/signin" style={{ textDecoration: 'none' }}>Log In</Link>
       </div>
           </Form>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Create a account? <Link to="/signup">Sign Up</Link>
+        Create a account? <Link to="/signup" style={{ textDecoration: 'none' }}>Sign Up</Link>
       </div>
       
     </>
