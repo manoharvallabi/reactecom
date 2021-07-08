@@ -19,7 +19,7 @@ function App() {
               <Route path ="/signup" component={Signup} />
               <Route path ="/signin" component={Login} />
               <Route path ="/reset-password" component={PasswordReset} />
-              <Route path ="/update-profile" component={UpdateProfile} />
+              <PrivateRoute path ="/update-profile" component={UpdateProfile} />
             </Switch>
           </AuthProvider>
         </Router>
